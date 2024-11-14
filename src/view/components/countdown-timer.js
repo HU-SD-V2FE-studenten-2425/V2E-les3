@@ -7,7 +7,7 @@ export class CountdownTimer extends LitElement {
   #END_TIME = 0;
 
   static properties = {
-    countdownValue: { type: Number },
+    countdownValue: { type: Number, reflect: true },
     start: { type: Number },
   };
 
@@ -19,13 +19,8 @@ export class CountdownTimer extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.countdownValue = this.start;
-    console.log(`start: ${this.start}`);
 
-    this.intervalID = setInterval(
-      this.countingDownHandler.bind(this),
-      this.#ONE_SECOND_IN_MILLISECONDS
-    );
+    this.countdownValue = this.start;
   }
 
   countingDownHandler() {
@@ -38,9 +33,17 @@ export class CountdownTimer extends LitElement {
     console.log(`Counting Down: ${this.countdownValue}`);
   }
 
+  clickHandler(event) {
+    this.intervalID = setInterval(
+      this.countingDownHandler.bind(this),
+      this.#ONE_SECOND_IN_MILLISECONDS
+    );
+  }
+
   render() {
     return html`
       Countdown: ${this.countdownValue}
+      <button id="btnStart" @click=${this.clickHandler}>Start</button>
     `;
   }
 }
