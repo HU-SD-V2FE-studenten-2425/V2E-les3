@@ -23,6 +23,11 @@ export class CountdownTimer extends LitElement {
     this.countdownValue = this.start;
   }
 
+  firstUpdated() {
+    const btnElement = this.shadowRoot.querySelector('#btnStart');
+    console.log(btnElement);    
+  }
+
   countingDownHandler() {
     this.countdownValue -= this.#ONE_SECOND;
 
